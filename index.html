@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>The 1st International Workshop on Multimodal Foundation Models for Spatial Intelligence</title>
+
+    <style>
+        body {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            font-size: 18px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        a:link {
+            color: blue;
+        }
+
+        a:visited {
+            color: blue;
+        }
+
+        a:hover {
+            color: orange;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* 顶部大图样式 */
+        .hero-banner {
+            width: 100%;
+            height: 60vh;
+            background-image: url('images/MM25.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            margin-top: 60px; /* 为固定导航栏留出空间 */
+        }
+
+        .hero-banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* 背景半透明暗化 */
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        /* 导航栏样式 */
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #333;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            padding: 0 20px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu li {
+            padding: 0;
+        }
+
+        .nav-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 20px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background-color: #555;
+            color: #fff;
+        }
+
+        .nav-menu a.active {
+            background-color: #4CAF50;
+        }
+
+        td {
+            text-align: left;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 15px;
+            padding-right: 0px;
+        }
+
+        .row {
+            content: "";
+            clear: both;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding-bottom: 5px;
+        }
+
+        .column {
+            float: left;
+            width: 15%;
+            padding: 5px;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-content {
+            text-align: left;
+        }
+
+        .text-content .text-box {
+            /* text-indent: 2ch; */
+        }
+
+        .text-content .table-box {
+            width: 100%;
+            height: 0;
+            padding-bottom: 29%;
+            background: url(images/table.jpg) no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .text-content .text-title {
+            font-weight: bold;
+        }
+
+        .text-content .text-p {
+            text-indent: 2ch;
+            margin: 10px 0;
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-to-top:hover {
+            background-color: #555;
+        }
+
+        /* 移动端响应式设计 */
+        @media only screen and (max-width: 768px) {
+            .row {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .column {
+                float: left;
+                width: 100%;
+                padding: 0px;
+                margin-bottom: 10px;
+            }
+
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+            }
+
+            .nav-menu a {
+                padding: 10px;
+            }
+        }
+    </style>
+
+    <meta charset="UTF-8">
+    <meta name="description" content="ECCV 2024 Tutorial on Emerging Trends in Disentanglement and Compositionality">
+    <meta name="keywords" content="ECCV, Disentanglement and Compositionality, Computer Vision">
+    <meta name="author" content="Xin Jin et al.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <!-- 固定导航栏 -->
+    <header class="sticky-header">
+        <nav class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#overview">概述</a></li>
+                <li><a href="#call-for-papers">征稿</a></li>
+                <li><a href="#schedule">日程</a></li>
+                <li><a href="#speakers">特邀讲者</a></li>
+                <li><a href="#organizers">组织者</a></li>
+                <li><a href="#contact">联系方式</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 大图标题区域 -->
+    <section id="home" class="hero-banner">
+        <div class="hero-content">
+            <h1>The 1st International Workshop on Multimodal Foundation</h1>
+            <h1>Models for Spatial Intelligence</h1>
+        </div>
+    </section>
+
+    <div id="overview" class="container">
+        <h2>Overview</h2>
+        <div class="text-content">
+             <p>
+                Multimodal foundation models have transformed artificial intelligence by enabling scalable and transferable representations across diverse modalities, facilitating applications in vision-language understanding, text-to-image/video generation, and AI-driven assistants. However, their reliance on predominantly linguistic and 2D visual representations limits their ability to interact effectively with the physical world, where deep 3D spatial reasoning is crucial. Spatial intelligence, which encompasses perception, comprehension, and reasoning about spatial relationships and 3D structures, is essential for advancing AI models beyond static, task-specific functions toward embodied capabilities. Achieving robust spatial intelligence is critical for applications such as autonomous systems, robotics, augmented reality, and digital twins.
+            </p>
+
+             <p>
+                This workshop seeks to bring together researchers and practitioners from multimedia and related communities to discuss <span style="color: #bf9000;">Multimodal Foundation Models for Spatial Intelligence</span>. There are a lot of open problems to be explored, no matter the aspects of multimedia data and benchmarks, framework designs, training techniques, or trust-worthy algorithms. By uniting insights from researchers from various backgrounds, we aim to step towards reshaping the future of spatially-aware foundation models and paving the way for next-generation AI systems capable of perceiving, reasoning, and acting in complex 3D environments.
+             </p>
+        </div>
+    </div>
+
+    <div id="call-for-papers" class="container">
+        <h2>Call for Papers</h2>
+
+        <div class="text-content">
+            <div class="text-box">
+                We welcome three types of submissions, all of which should align with the topics of interest below:
+            </div>
+            <br>
+            <div class="text-box">
+                •  <span class="text-title">Position or Perspective Papers</span> (up to 4 pages, excluding references): Original ideas, perspectives, research visions, and open challenges related to evaluation approaches for explainable recommender systems.
+            </div>
+            <br>
+            <div class="text-box">
+                •  <span class="text-title">Featured Papers</span> (title, abstract, and the original paper): Previously published papers or summaries of existing publications from leading conferences and high-impact journals that are relevant to the workshop theme.
+            </div>
+            <br>
+            <div class="text-box">
+                •  <span class="text-title">Demonstration Papers</span> (up to 2 pages, excluding references): Original or previously published prototypes and operational evaluation approaches in explainable recommender systems.
+            </div>
+
+            <br><br>
+
+            <h2>Topics of Interest</h2>
+            <div class="text-box">
+                We invite submissions of original research contributions related to, but not limited to, the following topics:
+            </div>
+            <br>
+
+            <div class="text-box">1. <span class="text-title">Multimodal Spatial Understanding</span></div>
+            <div class="text-p">•  Multimodal Large Language Models with Spatial Awareness</div>
+            <div class="text-p">•  (3D) Vision-Language-Action Alignment</div>
+            <div class="text-p">•  3D Scene Perception (Detection, Segmentation)</div>
+            <div class="text-p">•  3D Semantic Occupancy Prediction</div>
+            <div class="text-p">•  Multimodal Spatial Reasoning (Images, Videos, Point Clouds, Text, Audio, etc.)</div>
+            <div class="text-p">•  3D Spatial Grounding</div>
+            <div class="text-p">•  Multimodal Affordance Learning</div>
+
+            <div class="text-box">2. <span class="text-title">3D/3D-Aware Generative Models and World Models</span></div>
+            <div class="text-p">•  3D-Aware Diffusion Models and Variational Autoencoders (VAEs)</div>
+            <div class="text-p">•  World Models and Its Application in Embodied AI and Autonomous Vehicles</div>
+            <div class="text-p">•  3D Generative Adversarial Networks (3D GANs)</div>
+            <div class="text-p">•  Multi-view Consistent 3D Generation</div>
+            <div class="text-p">•  Camera View and Motion Controllability in Generation</div>
+
+            <div class="text-box">3. <span class="text-title">3D Geometric Reconstruction</span></div>
+            <div class="text-p">•  3D Reconstruction from Multimodal Inputs</div>
+            <div class="text-p">•  Neural Implicit Representations for 3D Reconstruction</div>
+            <div class="text-p">•  3D Gaussian Splatting for High-fidelity Scene Reconstruction</div>
+            <div class="text-p">•  Integration of Geometric Priors in Deep Learning Models</div>
+            <div class="text-p">•  SLAM and Semantic SLAM</div>
+            <div class="text-p">•  Scalable 3D Reconstruction for Large-scale Datasets</div>
+
+            <div class="text-box">4. <span class="text-title">Data and Benchmarks for Deep Spatial Analysis</span></div>
+            <div class="text-p">•  Benchmarks for Spatial Intelligence</div>
+            <div class="text-p">•  Large-scale Datasets for Multimodal Spatial Reasoning</div>
+            <div class="text-p">•  Standardized Evaluation Protocols for 3D Generative Models</div>
+            <div class="text-p">•  Novel Multimodal Annotation Techniques and Crowdsourced Datasets</div>
+            <div class="text-p">•  Multimodal Learning for World Simulation</div>
+
+            <div class="text-box">5. <span class="text-title">Trustworthy Spatial Intelligence</span></div>
+            <div class="text-p">•  Ethical Considerations in 3D Generative Models</div>
+            <div class="text-p">•  Trustworthy and Robust 3D Foundation Models</div>
+            <div class="text-p">•  Fairness and Bias in 3D and Multimodal Datasets and Foundation Models</div>
+        </div>
+    </div>
+
+    <div id="schedule" class="container">
+        <h2>Schedule</h2>
+        <table>
+            <tr>
+                <td class="td1">08:00 am - 08:50 am</td>
+                <td>Poster setup</td>
+            </tr>
+    
+            <tr>
+                <td class="td1">08:50 am - 09:00 am</td>
+                <td>Opening remarks</td>
+            </tr>
+    
+            <tr>
+                <td class="td1">09:00 am - 09:30 am</td>
+                <td>Invited talk 1</td>
+            </tr>
+    
+            <tr>
+                <td class="td1">09:30 am - 10:00 am</td>
+                <td>Invited talk 2</td>
+            </tr>
+    
+            <tr>
+                <td class="td1">10:00 am - 11:00 am</td>
+                <td>Coffee break</td>
+            </tr>
+    
+            <tr>
+                <td class="td1">11:00 am - 11:30 am</td>
+                <td>Invited talk 3</td>
+            </tr>
+
+            <tr>
+                <td class="td1">11:30 am - 12:00 am</td>
+                <td>Invited talk 4</td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+    
+            <tr>
+                <!-- <td rowspan="9">Afternoon session</td> -->
+                <td class="td1">12:30 pm - 13:30 pm</td>
+                <td>Lunch break</td>
+            </tr>
+    
+            <tr>
+                <td class="td1">13:30 pm - 14:00 pm</td>
+                <td>Invited talk 4</td>
+            </tr>
+    
+            <tr>
+                <td class="td1">14:00 pm - 14:30 pm</td>
+                <td>Invited talk 5</td>
+            </tr>
+
+            <tr>
+                <td class="td1">14:30 pm - 15:00 pm</td>
+                <td>Contributed talks</td>
+            </tr>
+    
+            <tr>
+                <td class="td1">15:00 pm - 16:00 pm</td>
+                <td>ICoffee break</td>
+            </tr>
+    
+            <tr>
+                <td class="td1">16:00 pm - 16:30 pm</td>
+                <td>Invited talk 6</td>
+            </tr>
+
+            <tr>
+                <td class="td1">16:30 pm - 17:30 pm</td>
+                <td>Panel</td>
+            </tr>
+    
+            <tr>
+                <td class="td1">17:30 pm - 17:40 pm</td>
+                <td>Closing remarks</td>
+            </tr>
+
+            <tr>
+                <td class="td1">17:40 pm - 19:00 pm</td>
+                <td>Socials</td>
+            </tr>
+    
+        </table>
+    </div>
+
+ 
+    <div id="speakers" class="container">
+        <h2>Invited Speakers</h2>
+    </div>
+    
+
+    <div id="organizers" class="container">
+        <h2>Organizers</h2>
+
+        <div class="row">
+            <div class="column">
+                <a href="https://djiajunustc.github.io/">
+                    <img src="images/djj.jpg" alt="Jiajun Deng" width="220" height="230">
+                    <div>Jiajun Deng<br>The University of Adelaide<br>Adelaide, Australia<br>jiajun.deng@adelaide.edu.au
+                    </div>
+                </a>
+            </div>
+            <div class="column">
+                <a href="https://llijiang.github.io/">
+                    <img src="images/jl.png" alt="Li Jiang" width="220" height="230">
+                    <div>Li Jiang<br>CUHK (Shenzhen)<br>Shenzhen, China<br>jiangli@cuhk.edu.cn</div>
+                </a>
+            </div>
+            <div class="column">
+                <a href="https://www.eitech.edu.cn/?tid=49&p=teacher&lang=en">
+                    <img src="images/jx.jpg" alt="Xin Jin" width="220" height="230">
+                    <div>Xin Jin<br>Eastern Institute of Technology<br>Ningbo, China<br>jinxin@eitech.edu.cn</div>
+                </a>
+            </div>
+            <div class="column">
+                <a href="https://www.microsoft.com/en-us/research/people/tianyuhe/">
+                    <img src="images/hty.jpg" alt="Tianyu He" width="220" height="230">
+                    <div>Tianyu He<br>Microsoft<br>Beijing, China<br>tianyuhe@microsoft.com</div>
+                </a>
+            </div>
+            <div class="column">
+                <a href="https://zhengyuan.info/">
+                    <img src="images/yzy.jpg" alt="Zhengyuan Yang" width="220" height="230">
+                    <div>Zhengyuan Yang<br>Microsoft<br>Seattle, USA<br>zhengyuan.yang13@gmail.com</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <a href="http://staff.ustc.edu.cn/~zhwg/">
+                    <img src="images/zwg.png" alt="Wengang Zhou" width="220" height="230">
+                    <div>Wengang Zhou<br>USTC<br>Hefei, China<br>zhwg@ustc.edu.cn</div>
+                </a>
+            </div>
+            <div class="column">
+                <a href="https://scholar.google.com.au/citations?user=RMSuNFwAAAAJ&hl=en">
+                    <img src="images/yy.png" alt="Yi Yang" width="220" height="230">
+                    <div>Yi Yang<br>Zhejiang University<br>Hangzhou, China<br>yangyics@zju.edu.cn</div>
+                </a>
+            </div>
+            <div class="column">
+                <a href="https://disi.unitn.it/~sebe/">
+                    <img src="images/NicuSebe.png" alt="Nicu Sebe" width="220" height="230">
+                    <div>Nicu Sebe<br>University of Trento<br>Trento, Italy<br>sebe@disi.unitn.it</div>
+                </a>
+            </div>
+            <div class="column">
+                <a href="http://staff.ustc.edu.cn/~lihq/en/">
+                    <img src="images/lhq.jpg" alt="Houqiang Li" width="220" height="230">
+                    <div>Houqiang Li<br>USTC<br>Hefei, China<br>lihq@ustc.edu.cn</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+   
+    
+    <div id="contact" class="container">
+        <h2>Contact</h2>
+        <div class="text-content">
+            <p>Please contact <a href="#">djiajun1206@gmail.com</a> for general inquiries.</p>
+        </div>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <a href="#" class="back-to-top">↑</a>
+
+    <!-- JavaScript 代码 -->
+    <script>
+        // 当页面滚动时，更新导航栏样式和显示返回顶部按钮
+        window.onscroll = function() {
+            const header = document.querySelector('.sticky-header');
+            const backToTop = document.querySelector('.back-to-top');
+            
+            // 当页面滚动超过200px时显示返回顶部按钮
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                backToTop.style.display = "block";
+            } else {
+                backToTop.style.display = "none";
+            }
+            
+            // 获取所有section
+            const sections = document.querySelectorAll('.container');
+            const navItems = document.querySelectorAll('.nav-menu a');
+            
+            // 计算当前滚动位置，确定活动的导航项
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.pageYOffset >= sectionTop - 100) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            // 更新导航栏活动项
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if(item.getAttribute('href').substring(1) === currentSection) {
+                    item.classList.add('active');
+                }
+            });
+        };
+        
+        // 平滑滚动功能
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                let targetElement;
+                
+                if (targetId === '#') {
+                    // 回到顶部
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    // 滚动到特定部分
+                    targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 60, // 减去导航栏高度
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
