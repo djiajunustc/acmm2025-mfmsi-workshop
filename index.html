@@ -12,6 +12,7 @@
             background-color: #f2f2f2;
             font-size: 18px;
             font-family: 'Arial', sans-serif;
+            scroll-padding-top: 60px; /* 为锚点定位提供顶部空间，避免内容被导航栏遮挡 */
         }
 
         a:link {
@@ -80,12 +81,14 @@
             z-index: 1000;
             transition: all 0.3s ease;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: 60px; /* 设置固定高度 */
         }
 
         .nav-container {
             display: flex;
             justify-content: center;
             padding: 0 20px;
+            height: 100%;
         }
 
         .nav-menu {
@@ -93,18 +96,22 @@
             list-style: none;
             margin: 0;
             padding: 0;
+            height: 100%;
         }
 
         .nav-menu li {
             padding: 0;
+            height: 100%;
         }
 
         .nav-menu a {
-            display: block;
+            display: flex;
+            align-items: center;
             color: white;
             text-decoration: none;
-            padding: 20px 15px;
+            padding: 0 15px;
             transition: all 0.3s ease;
+            height: 100%;
         }
 
         .nav-menu a:hover {
@@ -114,6 +121,14 @@
 
         .nav-menu a.active {
             background-color: #4CAF50;
+        }
+
+        /* 锚点目标容器调整，添加顶部内边距 */
+        .section-anchor {
+            display: block;
+            position: relative;
+            top: -60px; /* 与导航栏高度相同 */
+            visibility: hidden;
         }
 
         td {
@@ -130,13 +145,36 @@
             display: flex;
             flex-direction: row;
             justify-content: center;
+            flex-wrap: wrap;
             padding-bottom: 5px;
+            gap: 20px;
         }
 
         .column {
             float: left;
-            width: 15%;
-            padding: 5px;
+            width: 220px; /* 固定宽度，与图片宽度一致 */
+            padding: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .column img {
+            width: 220px;
+            height: 230px;
+            object-fit: cover; /* 保持图片比例，避免变形 */
+            border-radius: 5px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+        }
+
+        .column a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .column div {
+            margin-top: 8px;
+            font-size: 16px;
+            line-height: 1.4;
         }
 
         .container {
@@ -203,13 +241,20 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
+                align-items: center;
             }
 
             .column {
-                float: left;
+                float: none;
+                width: 80%;
+                padding: 10px;
+                margin-bottom: 20px;
+            }
+
+            .column img {
                 width: 100%;
-                padding: 0px;
-                margin-bottom: 10px;
+                height: auto;
+                max-width: 220px;
             }
 
             .hero-content h1 {
@@ -257,7 +302,8 @@
         </div>
     </section>
 
-    <div id="overview" class="container">
+    <div class="container">
+        <span class="section-anchor" id="overview"></span>
         <h2>Overview</h2>
         <div class="text-content">
              <p>
@@ -270,7 +316,8 @@
         </div>
     </div>
 
-    <div id="call-for-papers" class="container">
+    <div class="container">
+        <span class="section-anchor" id="call-for-papers"></span>
         <h2>Call for Papers</h2>
 
         <div class="text-content">
@@ -336,7 +383,8 @@
         </div>
     </div>
 
-    <div id="schedule" class="container">
+    <div class="container">
+        <span class="section-anchor" id="schedule"></span>
         <h2>Schedule</h2>
         <table>
             <tr>
@@ -380,7 +428,6 @@
             </tr>
     
             <tr>
-                <!-- <td rowspan="9">Afternoon session</td> -->
                 <td class="td1">12:30 pm - 13:30 pm</td>
                 <td>Lunch break</td>
             </tr>
@@ -420,88 +467,138 @@
                 <td>Closing remarks</td>
             </tr>
 
-            <tr>
+            <!-- <tr>
                 <td class="td1">17:40 pm - 19:00 pm</td>
                 <td>Socials</td>
-            </tr>
+            </tr> -->
     
         </table>
     </div>
 
- 
-    <div id="speakers" class="container">
+    <div class="container">
+        <span class="section-anchor" id="speakers"></span>
         <h2>Invited Speakers</h2>
     </div>
-    
 
-    <div id="organizers" class="container">
+    <!-- 以下为修改成 3x3 的 Organizers 排版 -->
+    <div class="container">
+        <span class="section-anchor" id="organizers"></span>
         <h2>Organizers</h2>
 
+        <!-- 第 1 行 -->
         <div class="row">
             <div class="column">
                 <a href="https://djiajunustc.github.io/">
-                    <img src="images/djj.jpg" alt="Jiajun Deng" width="220" height="230">
-                    <div>Jiajun Deng<br>The University of Adelaide<br>Adelaide, Australia<br>jiajun.deng@adelaide.edu.au
+                    <img src="images/djj.jpg" alt="Jiajun Deng">
+                    <div>
+                        Jiajun Deng<br>
+                        The University of Adelaide<br>
+                        Adelaide, Australia<br>
+                        jiajun.deng@adelaide.edu.au
                     </div>
                 </a>
             </div>
             <div class="column">
                 <a href="https://llijiang.github.io/">
-                    <img src="images/jl.png" alt="Li Jiang" width="220" height="230">
-                    <div>Li Jiang<br>CUHK (Shenzhen)<br>Shenzhen, China<br>jiangli@cuhk.edu.cn</div>
+                    <img src="images/jl.png" alt="Li Jiang">
+                    <div>
+                        Li Jiang<br>
+                        CUHK (Shenzhen)<br>
+                        Shenzhen, China<br>
+                        jiangli@cuhk.edu.cn
+                    </div>
                 </a>
             </div>
             <div class="column">
                 <a href="https://www.eitech.edu.cn/?tid=49&p=teacher&lang=en">
-                    <img src="images/jx.jpg" alt="Xin Jin" width="220" height="230">
-                    <div>Xin Jin<br>Eastern Institute of Technology<br>Ningbo, China<br>jinxin@eitech.edu.cn</div>
-                </a>
-            </div>
-            <div class="column">
-                <a href="https://www.microsoft.com/en-us/research/people/tianyuhe/">
-                    <img src="images/hty.jpg" alt="Tianyu He" width="220" height="230">
-                    <div>Tianyu He<br>Microsoft<br>Beijing, China<br>tianyuhe@microsoft.com</div>
-                </a>
-            </div>
-            <div class="column">
-                <a href="https://zhengyuan.info/">
-                    <img src="images/yzy.jpg" alt="Zhengyuan Yang" width="220" height="230">
-                    <div>Zhengyuan Yang<br>Microsoft<br>Seattle, USA<br>zhengyuan.yang13@gmail.com</div>
+                    <img src="images/jx.jpg" alt="Xin Jin">
+                    <div>
+                        Xin Jin<br>
+                        Eastern Institute of Technology<br>
+                        Ningbo, China<br>
+                        jinxin@eitech.edu.cn
+                    </div>
                 </a>
             </div>
         </div>
 
+        <!-- 第 2 行 -->
         <div class="row">
             <div class="column">
-                <a href="http://staff.ustc.edu.cn/~zhwg/">
-                    <img src="images/zwg.png" alt="Wengang Zhou" width="220" height="230">
-                    <div>Wengang Zhou<br>USTC<br>Hefei, China<br>zhwg@ustc.edu.cn</div>
+                <a href="https://www.microsoft.com/en-us/research/people/tianyuhe/">
+                    <img src="images/hty.jpg" alt="Tianyu He">
+                    <div>
+                        Tianyu He<br>
+                        Microsoft<br>
+                        Beijing, China<br>
+                        tianyuhe@microsoft.com
+                    </div>
                 </a>
             </div>
             <div class="column">
+                <a href="https://zhengyuan.info/">
+                    <img src="images/yzy.jpg" alt="Zhengyuan Yang">
+                    <div>
+                        Zhengyuan Yang<br>
+                        Microsoft<br>
+                        Seattle, USA<br>
+                        zhengyuan.yang13@gmail.com
+                    </div>
+                </a>
+            </div>
+            <div class="column">
+                <a href="http://staff.ustc.edu.cn/~zhwg/">
+                    <img src="images/zwg.png" alt="Wengang Zhou">
+                    <div>
+                        Wengang Zhou<br>
+                        USTC<br>
+                        Hefei, China<br>
+                        zhwg@ustc.edu.cn
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 第 3 行 -->
+        <div class="row">
+            <div class="column">
                 <a href="https://scholar.google.com.au/citations?user=RMSuNFwAAAAJ&hl=en">
-                    <img src="images/yy.png" alt="Yi Yang" width="220" height="230">
-                    <div>Yi Yang<br>Zhejiang University<br>Hangzhou, China<br>yangyics@zju.edu.cn</div>
+                    <img src="images/yy.png" alt="Yi Yang">
+                    <div>
+                        Yi Yang<br>
+                        Zhejiang University<br>
+                        Hangzhou, China<br>
+                        yangyics@zju.edu.cn
+                    </div>
                 </a>
             </div>
             <div class="column">
                 <a href="https://disi.unitn.it/~sebe/">
-                    <img src="images/NicuSebe.png" alt="Nicu Sebe" width="220" height="230">
-                    <div>Nicu Sebe<br>University of Trento<br>Trento, Italy<br>sebe@disi.unitn.it</div>
+                    <img src="images/NicuSebe.png" alt="Nicu Sebe">
+                    <div>
+                        Nicu Sebe<br>
+                        University of Trento<br>
+                        Trento, Italy<br>
+                        sebe@disi.unitn.it
+                    </div>
                 </a>
             </div>
             <div class="column">
                 <a href="http://staff.ustc.edu.cn/~lihq/en/">
-                    <img src="images/lhq.jpg" alt="Houqiang Li" width="220" height="230">
-                    <div>Houqiang Li<br>USTC<br>Hefei, China<br>lihq@ustc.edu.cn</div>
+                    <img src="images/lhq.jpg" alt="Houqiang Li">
+                    <div>
+                        Houqiang Li<br>
+                        USTC<br>
+                        Hefei, China<br>
+                        lihq@ustc.edu.cn
+                    </div>
                 </a>
             </div>
         </div>
     </div>
 
-   
-    
-    <div id="contact" class="container">
+    <div class="container">
+        <span class="section-anchor" id="contact"></span>
         <h2>Contact</h2>
         <div class="text-content">
             <p>Please contact <a href="#">djiajun1206@gmail.com</a> for general inquiries.</p>
@@ -525,23 +622,26 @@
                 backToTop.style.display = "none";
             }
             
-            // 获取所有section
+            // 获取所有container对应的 section-anchor
             const sections = document.querySelectorAll('.container');
             const navItems = document.querySelectorAll('.nav-menu a');
             
-            // 计算当前滚动位置，确定活动的导航项
             let currentSection = '';
             sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (window.pageYOffset >= sectionTop - 100) {
-                    currentSection = section.getAttribute('id');
+                const sectionAnchor = section.querySelector('.section-anchor');
+                if (sectionAnchor) {
+                    const sectionId = sectionAnchor.getAttribute('id');
+                    const sectionTop = section.offsetTop;
+                    if (window.pageYOffset >= sectionTop - 100) {
+                        currentSection = sectionId;
+                    }
                 }
             });
             
             // 更新导航栏活动项
             navItems.forEach(item => {
                 item.classList.remove('active');
-                if(item.getAttribute('href').substring(1) === currentSection) {
+                if (item.getAttribute('href').substring(1) === currentSection) {
                     item.classList.add('active');
                 }
             });
@@ -553,7 +653,6 @@
                 e.preventDefault();
                 
                 const targetId = this.getAttribute('href');
-                let targetElement;
                 
                 if (targetId === '#') {
                     // 回到顶部
@@ -563,10 +662,11 @@
                     });
                 } else {
                     // 滚动到特定部分
-                    targetElement = document.querySelector(targetId);
+                    const targetElement = document.querySelector(targetId);
                     if (targetElement) {
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
                         window.scrollTo({
-                            top: targetElement.offsetTop - 60, // 减去导航栏高度
+                            top: targetPosition,
                             behavior: 'smooth'
                         });
                     }
